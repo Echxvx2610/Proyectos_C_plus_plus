@@ -19,7 +19,7 @@ using namespace std;
 
 
 #define USER "ADMIN"
-#define PASSW "1234"
+#define PASSW "0123"
 
 //bloque de funciones
 
