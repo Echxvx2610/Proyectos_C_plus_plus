@@ -47,15 +47,13 @@ using namespace std;
             a =0;
         }
     }
-}
+} 
 }
 */
 
-float saldo_disponible = 100, ingresoDinero=0, montoRetirar=0, saldoActual=0;
-//este mensaje debe verlo oscar
-
 int main() 
 {
+    float saldo_disponible = 100, ingresoDinero=0, montoRetirar=0, saldoActual=0;
     int opcion, respuesta;
     int a = 1; //variable para controlar el bucle while de login
     int b = 1; //variable para controlar el bucle while de banca
