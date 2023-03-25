@@ -51,13 +51,14 @@ using namespace std;
 }
 */
 
-
+float saldo_disponible = 100, ingresoDinero=0, montoRetirar=0, saldoActual=0;
+//este mensaje debe verlo oscar
 
 int main() 
 {
-    float saldoInicial = 500, ingresoDinero, montoRetirar, saldoActual;
     int opcion, respuesta;
-    int a = 1;
+    int a = 1; //variable para controlar el bucle while de login
+    int b = 1; //variable para controlar el bucle while de banca
     string usuario,password;
     while (a==1){
     cout <<"\t\t\tBienvenido a tu Banca Virtual"<<endl;
@@ -66,9 +67,9 @@ int main()
     cout << "Usuario: ";cin >> usuario;
     cout << "Nip: ";cin >> password;
     if (usuario == USER and password == PASSW){
-    a = 0;
+    a = 0;  //cerramos bucle while de login..
     cout << "\n\t[ BIENVENIDO A TU BANCA VIRTUAL ]" << endl;
-    inicio:
+    while(b==1){
     		cout << endl;
             cout << "[1] Consulta de saldo" << endl;
             cout << "[2] Ingresar dinero" << endl;
@@ -84,49 +85,47 @@ int main()
         case 1: 
         	cout << endl;
             cout << "\t-- [1] CONSULTA DE SALDO [1] --" << endl; cout << endl;
-            cout << "Saldo Actual: $" << saldoInicial << endl; cout << endl;
+            cout << "Saldo Actual: $" << saldo_disponible << endl; cout << endl;
             cout << "Desea realizar otra operacion?" << endl; cout << endl;
             cout << "[1] Si" << endl;
             cout << "[0] No\n" << endl;
             cout << "Opcion: ";
            	 	cin >> respuesta;
-            		if(respuesta == 1)
-					{
-						goto inicio;
-            		}
-            		else
-            		{ 
-						cout << "Que tenga buen dia!";
-					}
+                //bucle para continuar o cerrar bucle while banca virtual
+                if (respuesta == 1){
+                    b = 1;
+                }
+                else{
+                    b=0;
+                    cout << "Que tenga buen dia!";
+                }
         break;
         case 2:
         	cout << endl;
             cout << "\t-- [2] INGRESO DE DINERO [2] --" << endl; cout << endl;
-            cout << "Ingrese el monto: $ ";
-					cin >> ingresoDinero;
-        			saldoInicial = saldoInicial + ingresoDinero;
+            cout << "Ingrese el monto: $ ";cin >> ingresoDinero;
+        	saldo_disponible = saldo_disponible + ingresoDinero;
             cout << "El dinero fue ingresado correctamente." << endl;
-            cout << "Saldo actual: $" << saldoInicial << endl; cout << endl;
+            cout << "Saldo actual: $" << saldo_disponible << endl; cout << endl;
             cout << "Desea realizar otra operacion?" << endl;
             cout << "[1] Si" << endl;
             cout << "[0] No" << endl;
             cout << "Opcion: ";
             cin >> respuesta;
-            	if(respuesta == 1)
-				{
-					goto inicio;
-            	}
-            	else
-            	{
-            		cout << endl;
-            		cout << "Que tenga buen dia!";
-            	}
+            //bucle para continuar o cerrar bucle while banca virtual
+               if (respuesta == 1){
+                    b = 1;
+                }
+                else{
+                    b=0;
+                    cout << "Que tenga buen dia!";
+                }
         break;
         case 3:
         	cout << endl;
             cout << "\t-- [3] RETIRO DE DINERO [3] --" << endl; cout << endl;
             cout << "Ingrese el monto a retirar: $"; cin >> montoRetirar; cout << endl;
-             if(montoRetirar > saldoInicial)
+            if(montoRetirar > saldo_disponible)
                 {
                 cout << "[ERROR] No tiene esa cantidad de dinero." << endl; cout << endl;
                 cout << "Desea realizar otra operacion?" << endl;
@@ -134,58 +133,55 @@ int main()
                 cout << "[0] No" <<endl;
                 cout << "Opcion: ";
             	cin >> respuesta;
-            		if(respuesta == 1)
-					{
-					goto inicio;
-            		}
-            		else
-            		{
-            		cout << "Que tenga buen dia!";
-            		}
+                //bucle para continuar o cerrar bucle while banca virtual
+                    if (respuesta == 1){
+                        b = 1;
+                    }
+                    else{
+                        b=0;
+                        cout << "Que tenga buen dia!";
+                    }
                 }
-            else
-            {
-                if(montoRetirar > 9000)
-                {
-                cout << "[ERROR] Lo sentimos, su retiro no puede ser mayor a $9000 al dia" << endl;
-                cout << "Intente ingresando una cantidad menor." << endl; cout << endl;
-                cout << "Desea realizar otra operacion?" << endl;
-            	cout << "[1] Si" <<endl;
-            	cout << "[0] No" <<endl;
-            	cout << "Opcion: ";
-            	cin >> respuesta;
-            		if(respuesta == 1)
-					{
-					goto inicio;
-            		}
-            		else
-            		{
-            		cout << "Que tenga buen dia!";
-            		}
-                }
-                else
-                {
+            // if (montoRetirar > 9000)
+            // {
+            //     cout << "[ERROR] Lo sentimos, su retiro no puede ser mayor a $9000 al dia" << endl;
+            //     cout << "Intente ingresando una cantidad menor." << endl; cout << endl;
+            //     cout << "Desea realizar otra operacion?" << endl;
+            // 	cout << "[1] Si" <<endl;
+            // 	cout << "[0] No" <<endl;
+            // 	cout << "Opcion: ";
+            // 	cin >> respuesta;
+            //     //bucle para continuar o cerrar bucle while banca virtual
+            //         if (respuesta == 1){
+            //             b = 1;
+            //         }
+            //         else{
+            //             b=0;
+            //             cout << "Que tenga buen dia!";
+            //         }  
+            // }
+            else{
                 cout << "El retiro se ha realizado con exito." << endl;
-                		saldoActual = saldoInicial - montoRetirar;
+                saldoActual = saldo_disponible - montoRetirar;
+                saldo_disponible = saldoActual;
                 cout << "Saldo actual: $" << saldoActual << endl; cout << endl;
                 cout << "Desea realizar otra operacion?" << endl;
             	cout << "[1] Si" <<endl;
             	cout << "[0] No" <<endl;
             	cout << "Opcion: ";
             	cin >> respuesta;
-            		if(respuesta == 1)
-					{
-					goto inicio;
-            		}
-            		else
-            		{
-            		cout << "Que tenga buen dia!";
-            		}
-                }
+                //bucle para continuar o cerrar bucle while banca virtual
+                    if (respuesta == 1){
+                        b = 1;
+                    }
+                    else{
+                        b=0;
+                        cout << "Que tenga buen dia!";
+                    }
             }
-            cout << endl;
         break;
         case 4:
+            b = 0;
             cout << "Que tenga buen dia!";
             break;
         /*case 5:
@@ -195,6 +191,7 @@ int main()
         default:
             cout << "[ERROR] La opcion ["<<opcion<<"] es incorrecta";
             }
+    }
     }
         else{cout <<"El usuario y/o password son incorrectos"<<endl;
         cout<<"Desea volver a intentarlo? [1]Si,[2]No: \n";
