@@ -3,7 +3,7 @@
 CONTENIDO DEL CODIGO:
 - CONSULTA DE SALDO                                 [DONE]
 - INGRESO DE DINERO                                 [DONE]
-- RETIRO DE DINERO                                  [DONE] [ISSUE] ERROR EN BUCLE, EN PROCESO DE CORRECCION
+- RETIRO DE DINERO                                  [DONE]
 - BASE DE DATOS DE USUARIOS                         [IN PROCESS]
 - TRANSFERENCIAS BANCARIAS ENTRE USUARIOS           [OPEN]
 - CONSULTA DE MOVIMIENTOS                           [OPEN]
