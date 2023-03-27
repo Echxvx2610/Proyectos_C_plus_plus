@@ -88,15 +88,10 @@ int main()
             cout << "[1] Si" << endl;
             cout << "[0] No\n" << endl;
             cout << "Opcion: ";
-           	 	cin >> respuesta;
-                //bucle para continuar o cerrar bucle while banca virtual
-                if (respuesta == 1){
-                    b = 1;
-                }
-                else{
-                    b=0;
-                    cout << "Que tenga buen dia!";
-                }
+           	cin >> respuesta;
+            //bucle para continuar o cerrar bucle while banca virtual
+            //aplicacion de operador ternario
+            respuesta == 1 ? b = 1 : cout << "Que tenga buen dia!";
         break;
         case 2:
         	cout << endl;
@@ -111,13 +106,8 @@ int main()
             cout << "Opcion: ";
             cin >> respuesta;
             //bucle para continuar o cerrar bucle while banca virtual
-               if (respuesta == 1){
-                    b = 1;
-                }
-                else{
-                    b=0;
-                    cout << "Que tenga buen dia!";
-                }
+            //aplicacion de operador ternario
+            respuesta == 1 ? b = 1 : cout << "Que tenga buen dia!";
         break;
         case 3:
         	cout << endl;
@@ -132,32 +122,9 @@ int main()
                 cout << "Opcion: ";
             	cin >> respuesta;
                 //bucle para continuar o cerrar bucle while banca virtual
-                    if (respuesta == 1){
-                        b = 1;
-                    }
-                    else{
-                        b=0;
-                        cout << "Que tenga buen dia!";
-                    }
+                //aplicacion de operador ternario
+                respuesta == 1 ? b = 1 : cout << "Que tenga buen dia!";
                 }
-            // if (montoRetirar > 9000)
-            // {
-            //     cout << "[ERROR] Lo sentimos, su retiro no puede ser mayor a $9000 al dia" << endl;
-            //     cout << "Intente ingresando una cantidad menor." << endl; cout << endl;
-            //     cout << "Desea realizar otra operacion?" << endl;
-            // 	cout << "[1] Si" <<endl;
-            // 	cout << "[0] No" <<endl;
-            // 	cout << "Opcion: ";
-            // 	cin >> respuesta;
-            //     //bucle para continuar o cerrar bucle while banca virtual
-            //         if (respuesta == 1){
-            //             b = 1;
-            //         }
-            //         else{
-            //             b=0;
-            //             cout << "Que tenga buen dia!";
-            //         }  
-            // }
             else{
                 cout << "El retiro se ha realizado con exito." << endl;
                 saldoActual = saldo_disponible - montoRetirar;
@@ -169,23 +136,13 @@ int main()
             	cout << "Opcion: ";
             	cin >> respuesta;
                 //bucle para continuar o cerrar bucle while banca virtual
-                    if (respuesta == 1){
-                        b = 1;
-                    }
-                    else{
-                        b=0;
-                        cout << "Que tenga buen dia!";
-                    }
+                respuesta == 1 ? b = 1 : cout << "Que tenga buen dia!";
             }
         break;
         case 4:
             b = 0;
             cout << "Que tenga buen dia!";
             break;
-        /*case 5:
-            usuarios();
-            break;
-        */
         default:
             cout << "[ERROR] La opcion ["<<opcion<<"] es incorrecta";
             }
