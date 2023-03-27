@@ -149,7 +149,7 @@ int main()
     }
     }
         else{cout <<"El usuario y/o password son incorrectos"<<endl;
-        cout<<"Desea volver a intentarlo? [1]Si,[2]No: \n";
+        cout<<"Desea volver a intentarlo? [1]Si, [2]No: \n";
         cin>>a;
         if (a == 1){
             a = 1;}
