@@ -15,6 +15,9 @@ CONDICIONES AGREGADAS:
 */
 
 #include <iostream>
+#include <vector>
+#include <string>
+
 using namespace std;
 
 
@@ -24,32 +27,41 @@ using namespace std;
 //bloque de funciones
 
 //Funcion para generacion de usuarios,no borrar se integrara base de datos
-/*int usuarios(){
-    int a=1;
-    string usuario,password;
-    
-    while(a==1){
-        cout <<"\t\t\tBienvenido a tu Banca Virtual"<<endl;
-        cout <<"\t\t\t-----------------------------"<<endl;
-        cout <<"Por favor favor Inicie sesion...";
-        cout << "Usuario: ";cin >> usuario;
-        cout << "Nip: ";cin >> password;
-        if (usuario == USER and password == PASSW){
-        cout <<"\n\tBienvenido al sistema"<<endl;
-        a = 0;
-        }
-        else{cout <<"\n\tEl usuario y/o password son incorrectos"<<endl;
-            cout<<"Desea volver a intentarlo? [1]Si,[2]No: ";
-            cin>>a;
-            if (a == 1){
-                a = 1;}
-        else{
-            a =0;
+struct User{
+    string username_n;
+    string password_n;
+};
+
+vector<User> users;
+
+void createUser(){
+    string username_n,password_n;
+    cout << "Ingrese el nombre de usuario: ";
+    cin >> username_n;
+    cout << "Ingrese la contraseña: ";
+    cin >> password_n;
+    users.push_back({username_n, password_n});
+    cout << "Usuario creado exitosamente." << endl;
+}
+
+void login() {
+    string username_n, password_n;
+    cout << "Ingrese el nombre de usuario: ";
+    cin >> username_n;
+    cout << "Ingrese la contraseña: ";
+    cin >> password_n;
+    bool found = false;
+    for (int i = 0; i < users.size(); i++) {
+        if (users[i].username_n == username_n&& users[i].password_n == password_n){
+            found = true;
+            cout << "Usuario registrado con exito!, " << username_n << "!" << endl;
+            break;
         }
     }
-} 
+    if (!found) {
+        cout << "Usuario o contraseña incorrectos." << endl;
+    }
 }
-*/
 
 int main() 
 {
@@ -72,8 +84,8 @@ int main()
             cout << "[1] Consulta de saldo" << endl;
             cout << "[2] Ingresar dinero" << endl;
             cout << "[3] Retirar dinero" << endl;
-            cout << "[4] Salir" << endl;
-            //cout << "[5] Autenticar usuario"<<endl;
+            cout << "[4] Autenticar usuario" << endl;
+            cout << "[5] Salir"<<endl;
 			cout << endl;
             cout << "Seleccione una opcion: ";
 			cin >> opcion;
@@ -91,7 +103,12 @@ int main()
            	cin >> respuesta;
             //bucle para continuar o cerrar bucle while banca virtual
             //aplicacion de operador ternario
-            respuesta == 1 ? b = 1 : cout << "Que tenga buen dia!";
+            if (respuesta == 1){
+                b=1;
+            }
+            else{
+                a = 1;
+            }
         break;
         case 2:
         	cout << endl;
@@ -107,7 +124,12 @@ int main()
             cin >> respuesta;
             //bucle para continuar o cerrar bucle while banca virtual
             //aplicacion de operador ternario
-            respuesta == 1 ? b = 1 : cout << "Que tenga buen dia!";
+            if (respuesta == 1){
+                b=1;
+            }
+            else{
+                a = 1;
+            }
         break;
         case 3:
         	cout << endl;
@@ -123,7 +145,12 @@ int main()
             	cin >> respuesta;
                 //bucle para continuar o cerrar bucle while banca virtual
                 //aplicacion de operador ternario
-                respuesta == 1 ? b = 1 : cout << "Que tenga buen dia!";
+                if (respuesta == 1){
+                b=1;
+                }
+                else{
+                    a = 1;
+                }
                 }
             else{
                 cout << "El retiro se ha realizado con exito." << endl;
@@ -136,10 +163,18 @@ int main()
             	cout << "Opcion: ";
             	cin >> respuesta;
                 //bucle para continuar o cerrar bucle while banca virtual
-                respuesta == 1 ? b = 1 : cout << "Que tenga buen dia!";
+                if (respuesta == 1){
+                    b=1;
+                    }
+                else{
+                    a = 1;
+                }
             }
         break;
         case 4:
+            cout << "Usuario creado exitosamente,inicie sesion de nuevo \n";
+            b = 1;
+        case 5:
             b = 0;
             cout << "Que tenga buen dia!";
             break;
@@ -149,7 +184,9 @@ int main()
     }
     }
         else{cout <<"El usuario y/o password son incorrectos"<<endl;
-        cout<<"Desea volver a intentarlo? [1]Si, [2]No: \n";
+        cout<<"Desea volver a intentarlo?"<<endl;
+        cout << "[1] Si" <<endl;
+        cout << "[0] No" <<endl;
         cin>>a;
         if (a == 1){
             a = 1;}
