@@ -1,10 +1,16 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
 using namespace std;
+
 #define USER "ADMIN"
-#define PASSW "0123"
+#define PASSW 2610
+
+/*
+//definicion de usuario ADMIN
+const string USER = "ADMIN";
+const int PASSW = 0123;
+*/
 
 struct User {
     string username_n;
@@ -38,9 +44,11 @@ void login() {
     cin >> username_n;
     cout << "Ingrese la contraseña: ";
     cin >> password_n;
-    bool found = false;
+    int password_i = stoi(password_n); // convertimos el tipo de dato de password_n de string a int,para poder evaludar en el sig.if
+    //int PASSW_i = stoi(PASSW);//convertimos el tipo de dato de PASSW de string a int,para poder evaludar en el sig.if
+    bool found =false;
     for (int i = 0; i < users.size(); i++) {
-        if ((users[i].username_n == username_n && users[i].password_n == password_n))||(username_n == USER and password_n == PASSW){
+        if ((users[i].username_n == username_n && users[i].password_n == password_n)||(USER == username_n  && PASSW == password_i)){
             found = true;
             a = 0;
             cout <<"\n\t[ BIENVENIDO A TU BANCA VIRTUAL ]"<<endl;
