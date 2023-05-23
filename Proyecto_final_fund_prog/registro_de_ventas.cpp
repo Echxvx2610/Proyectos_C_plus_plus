@@ -12,11 +12,12 @@ using namespace std;
 struct Producto{
     string nombre;
     float precio;
+    int cantidad;
 };
 vector<Producto> productos;
 struct Venta{
-    string nombre = 0;
-    int cantidad = 0;
+    string nombre;
+    int cantidad;
 };
 vector<Venta> ventas;
 struct User {
@@ -138,7 +139,7 @@ void registro_de_venta(){
     cout <<"\t\t\t..::Registro de venta::.."<<endl;
 }
 void inventario(){
-    string nombre,precio;
+    string nombre,precio,cantidad;
     int option;
     cout <<"\t\t\t..::Inventario::..\n"<<endl;
     cout <<"\t\t1. Agregar producto"<<endl;
@@ -152,15 +153,17 @@ void inventario(){
             cout << "\tNombre del producto: ";getline(cin,nombre);
             cin.ignore();
             cout<< "\tPrecio: $";getline(cin,precio);
-            productos.push_back({nombre,stof(precio)});
+            cin.ignore();
+            cout << "\tStock:";getline(cin,cantidad);
+            productos.push_back({nombre,stof(precio),stof(cantidad)});
             inventario();
             break;
         case 2:
             cout <<"---------------------------------------------"<<endl;
-            cout <<"\t Producto             Precio "<<endl;
+            cout <<"\t Producto     Precio(Pesos)          Stock"<<endl;
             cout <<"---------------------------------------------"<<endl;
             for(int i = 0; i < productos.size(); i++){
-                cout <<"\t"<<productos[i].nombre<<"\t\t"<<productos[i].precio<<endl;
+                cout <<"\t"<<productos[i].nombre<<"\t\t"<<"$"<<productos[i].precio<<"\t\t"<<productos[i].cantidad<<endl;
             }
             inventario();
             break;
@@ -179,3 +182,80 @@ void proveedores(){
 void ventas_realizadas(){
     cout <<"\t\t\t..::Ventas realizadas::.."<<endl;
 }
+
+
+/*
+
+#include <iostream>
+#include <vector>
+
+struct Venta {
+    std::string producto;
+    float precio;
+    int cantidad;
+};
+
+void agregarVenta(std::vector<Venta>& ventas) {
+    Venta venta;
+    std::cout << "Ingrese el nombre del producto: ";
+    std::cin >> venta.producto;
+    std::cout << "Ingrese el precio del producto: ";
+    std::cin >> venta.precio;
+    std::cout << "Ingrese la cantidad vendida: ";
+    std::cin >> venta.cantidad;
+    
+    ventas.push_back(venta);
+    std::cout << "Venta registrada correctamente.\n";
+}
+
+void mostrarVentas(const std::vector<Venta>& ventas) {
+    if (ventas.empty()) {
+        std::cout << "No hay ventas registradas.\n";
+    } else {
+        std::cout << "Registro de ventas:\n";
+        for (const auto& venta : ventas) {
+            std::cout << "Producto: " << venta.producto << "\n";
+            std::cout << "Precio: $" << venta.precio << "\n";
+            std::cout << "Cantidad: " << venta.cantidad << "\n";
+            std::cout << "Total: $" << venta.precio * venta.cantidad << "\n";
+            std::cout << "------------------------\n";
+        }
+    }
+}
+
+int main() {
+    std::vector<Venta> ventas;
+    int opcion;
+
+    do {
+        std::cout << "----- Registro de Ventas -----\n";
+        std::cout << "1. Agregar venta\n";
+        std::cout << "2. Mostrar ventas\n";
+        std::cout << "3. Salir\n";
+        std::cout << "Seleccione una opción: ";
+        std::cin >> opcion;
+        
+        switch (opcion) {
+            case 1:
+                agregarVenta(ventas);
+                break;
+            case 2:
+                mostrarVentas(ventas);
+                break;
+            case 3:
+                std::cout << "Saliendo del programa.\n";
+                break;
+            default:
+                std::cout << "Opción inválida. Por favor, intente nuevamente.\n";
+                break;
+        }
+        
+        std::cout << "\n";
+    } while (opcion != 3);
+
+    return 0;
+}
+
+
+
+*/
