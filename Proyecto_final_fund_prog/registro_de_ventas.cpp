@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdio.h>
 #include<limits> // Para validacion de inputs
 #include <ctime> // Trabajo con fecha del PC
 
@@ -10,7 +11,7 @@ using namespace std;
 
 struct Producto{
     string nombre;
-    float precio;
+    string precio;
 };
 vector<Producto> productos;
 struct Venta{
@@ -138,7 +139,7 @@ void registro_de_venta(){
 }
 void inventario(){
     string nombre;
-    float precio;
+    string precio;
     cout <<"\t\t\t..::Inventario::..\n"<<endl;
     cout <<"\t1. Agregar producto"<<endl;
     cout <<"\t2. Ver productos"<<endl;
@@ -148,13 +149,13 @@ void inventario(){
     cout <<"\tIngrese una opcion: ";cin>>option;
     switch (option){
         case 1:
-            cout << "Descripcion o nombre del producto: ";getline(cin>>nombre);
-            cout << "Precio: ";getline(cin>>precio);
+            cout << "Descripcion o nombre del producto: ";getline(cin,nombre);
+            cout << "Precio: ";getline(cin,precio);
             productos.push_back({nombre,precio});
             inventario();
             break;
         case 2:
-            cout <<"productos:"<<endl;
+            cout <<"\t\tProductos:"<<endl;
             for(int i = 0; i < productos.size(); i++){
                 cout << productos[i].nombre << endl;
             }
