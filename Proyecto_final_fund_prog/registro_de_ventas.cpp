@@ -152,13 +152,12 @@ void inventario(){
             cout << "\tNombre del producto: ";getline(cin,nombre);
             cin.ignore();
             cout<< "\tPrecio: $";getline(cin,precio);
-            
-            productos.push_back({nombre,precio});
+            productos.push_back({nombre,stof(precio)});
             inventario();
             break;
         case 2:
             cout <<"---------------------------------------------"<<endl;
-            cout <<"\t Producto      ||     Precio "<<endl;
+            cout <<"\t Producto             Precio "<<endl;
             cout <<"---------------------------------------------"<<endl;
             for(int i = 0; i < productos.size(); i++){
                 cout <<"\t"<<productos[i].nombre<<"\t\t"<<productos[i].precio<<endl;
