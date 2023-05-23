@@ -39,13 +39,15 @@ struct Producto{
     int cantidad;
 };
 vector<Producto> productos;
+
 //Estructura Venta
 struct Venta{
     string nombre;
-    int precio;
-    int cantidad
+    float precio;
+    int cantidad;
 };
 vector<Venta> ventas;
+
 //Estructura User
 struct User {
     string username_n;
@@ -166,7 +168,25 @@ int main() {
 }
 //funcion registro_de_venta
 void registro_de_venta(){
-    cout <<"\t\t\t..::Registro de venta::.."<<endl;
+    string nombre,precio,cantidad;
+    int opcion;
+    cout <<"\t\t\t..::Registro de Venta::..\n"<<endl;
+    cin.ignore();
+    cout << "\tNombre del producto: ";getline(cin,nombre);
+    cin.ignore();
+    cout<< "\tPrecio: $";getline(cin,precio);
+    cin.ignore();
+    cout << "\tCantidad:";getline(cin,cantidad);
+    ventas.push_back({nombre,stof(precio),stof(cantidad)});
+    cout << "\tVenta registrada correctamente!.\n";
+    cout <<"\t1. Realizar otro registro.."<<endl;
+    cout <<"\t2. Salir.."<<endl;
+    cout <<"\tIngrese una opcion: ";cin>>opcion;
+    if(opcion == 1){
+        registro_de_venta();
+    }else{
+        exit(0);
+    }
 }
 //funcion inventario
 void inventario(){
