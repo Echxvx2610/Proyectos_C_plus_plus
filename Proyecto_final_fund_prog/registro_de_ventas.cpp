@@ -6,9 +6,12 @@
 #include <ctime> // Trabajo con fecha del PC
 
 using namespace std;
+//definir admin
 #define admin "admin"
 #define pass "admin"
 
+
+//
 struct Producto{
     string nombre;
     float precio;
@@ -145,7 +148,8 @@ void inventario(){
     cout <<"\t\t1. Agregar producto"<<endl;
     cout <<"\t\t2. Ver productos"<<endl;
     cout <<"\t\t3. Eliminar producto"<<endl;
-    cout <<"\t\t4. Salir"<<endl;
+    cout <<"\t\t4. Regresar"<<endl;
+    cout <<"\t\t5. Salir"<<endl;
     cout <<"\t\tIngrese una opcion: ";cin>>option;
     switch (option){
         case 1:
@@ -160,18 +164,42 @@ void inventario(){
             break;
         case 2:
             cout <<"---------------------------------------------"<<endl;
-            cout <<"\t Producto     Precio(Pesos)          Stock"<<endl;
+            cout <<"\t Producto     Precio(Pesos)       Stock"<<endl;
             cout <<"---------------------------------------------"<<endl;
             for(int i = 0; i < productos.size(); i++){
                 cout <<"\t"<<productos[i].nombre<<"\t\t"<<"$"<<productos[i].precio<<"\t\t"<<productos[i].cantidad<<endl;
+            };
+            cout <<"\t\t1. Regresar.."<<endl;
+            cout<<"\t\t2. Salir.."<<endl;
+            int b;
+            cout <<"\t\tIngrese una Opcion: ";cin>>b;
+            if(b==1){
+                inventario();
             }
-            inventario();
+            else{
+                exit(0);
+            }
             break;
         case 3:
-            cout << "producto eliminado"<<endl;
+            productos.pop_back();
+            cout << "\t\tProducto eliminado con exito!!\n"<<endl;
+            cout <<"\t\t1. Regresar.."<<endl;
+            cout<<"\t\t2. Salir.."<<endl;
+            int b;
+            cout <<"\t\tIngrese una Opcion: ";cin>>b;
+            if(b==1){
+                inventario();
+            }
+            else{
+                exit(0);
+            }
             break;
         case 4:
+            exit(0);//agregar funcion para Regresar
+            break;
+        case 5:
             exit(0);
+            break;
         default:
             cout << "Opcion invalida" << endl;
     }
