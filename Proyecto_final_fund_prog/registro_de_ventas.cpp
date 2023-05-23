@@ -11,12 +11,12 @@ using namespace std;
 
 struct Producto{
     string nombre;
-    string precio;
+    float precio;
 };
 vector<Producto> productos;
 struct Venta{
-    string nombre;
-    int cantidad;
+    string nombre = 0;
+    int cantidad = 0;
 };
 vector<Venta> ventas;
 struct User {
@@ -70,7 +70,7 @@ void login() {
         if (users[i].username_n == username_n && users[i].password_n == password_n) {
             found = true;
             int option;
-            cout << "\t\t\t..::Bienvenido " << username_n << "!::.. \n";
+            cout << "\n\t\t\t..::Bienvenido " << username_n << "!::.. \n";
             cout << "\t\t1. Registrar venta"<<endl;
             cout << "\t\t2. Inventario"<<endl;
             cout << "\t\t3. Comprar a provedores"<<endl;
@@ -112,7 +112,7 @@ int main() {
     int option;
     while (true) {
         cout<<"\n\t\t======================================================================\n"<<endl;
-        cout<<"\t\t\t\t*****// Registro de venta (Nombre local) //*****"<<endl;
+        cout<<"\t\t\t *****// Registro de venta (Nombre local) //*****"<<endl;
 	    cout<<"\t\t======================================================================\n\n"<<endl;
         cout << "\t1. Crear usuario" << endl;
         cout << "\t2. Iniciar sesión" << endl;
@@ -138,27 +138,32 @@ void registro_de_venta(){
     cout <<"\t\t\t..::Registro de venta::.."<<endl;
 }
 void inventario(){
-    string nombre;
-    string precio;
-    cout <<"\t\t\t..::Inventario::..\n"<<endl;
-    cout <<"\t1. Agregar producto"<<endl;
-    cout <<"\t2. Ver productos"<<endl;
-    cout <<"\t3. Eliminar producto"<<endl;
-    cout <<"\t4. Salir"<<endl;
+    string nombre,precio;
     int option;
-    cout <<"\tIngrese una opcion: ";cin>>option;
+    cout <<"\t\t\t..::Inventario::..\n"<<endl;
+    cout <<"\t\t1. Agregar producto"<<endl;
+    cout <<"\t\t2. Ver productos"<<endl;
+    cout <<"\t\t3. Eliminar producto"<<endl;
+    cout <<"\t\t4. Salir"<<endl;
+    cout <<"\t\tIngrese una opcion: ";cin>>option;
     switch (option){
         case 1:
-            cout << "Descripcion o nombre del producto: ";getline(cin,nombre);
-            cout << "Precio: ";getline(cin,precio);
+            cin.ignore();
+            cout << "\tNombre del producto: ";getline(cin,nombre);
+            cin.ignore();
+            cout<< "\tPrecio: $";getline(cin,precio);
+            
             productos.push_back({nombre,precio});
             inventario();
             break;
         case 2:
-            cout <<"\t\tProductos:"<<endl;
+            cout <<"---------------------------------------------"<<endl;
+            cout <<"\t Producto      ||     Precio "<<endl;
+            cout <<"---------------------------------------------"<<endl;
             for(int i = 0; i < productos.size(); i++){
-                cout << productos[i].nombre << endl;
+                cout <<"\t"<<productos[i].nombre<<"\t\t"<<productos[i].precio<<endl;
             }
+            inventario();
             break;
         case 3:
             cout << "producto eliminado"<<endl;
