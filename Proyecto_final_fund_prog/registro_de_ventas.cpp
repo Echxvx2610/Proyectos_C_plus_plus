@@ -27,6 +27,7 @@ CONTENIDO DEL CODIGO:
 CONDICIONES AGREGADAS:
 -CONDICION GENERAL DE REGRESO                       [IN PROCESS]
 -TABLA DINAMICA PARA PRODUTOS                        [IN PROCESS]
+-FECHA EN TABLA DINAMICA                            [IN PROCESS]
 
 ISSUE
 - ........
@@ -68,6 +69,7 @@ void registro_de_venta();
 void inventario();
 void proveedores();
 void ventas_realizadas();
+string obtenerFechaActual();
 
 
 //funcion principal
@@ -206,6 +208,7 @@ void inventario(){
     string nombre,precio,cantidad;
     int option,a,b,c,d;
     // Establecer ancho fijo para cada columna
+    const int ancho_fecha = 12;
     const int ancho_nombre = 20;
     const int ancho_precio = 10;
     const int ancho_stock = 10;
@@ -240,11 +243,11 @@ void inventario(){
             break;
         case 2:
             // Imprimir la tabla
-            cout <<"---------------------------------------------"<<endl;
-            std::cout<<"\t\t"<< std::left << std::setw(ancho_nombre) << "Nombre"<< std::setw(ancho_precio) << "Precio"<< std::setw(ancho_stock) << "Stock" << "\n";
-            cout <<"---------------------------------------------"<<endl;
+            cout <<"\t\t----------------------------------------------------------------"<<endl;
+            std::cout<<"\t\t"<< std::left <<std::setw(ancho_fecha)<<" Fecha"<< std::setw(ancho_nombre) << "Nombre"<< std::setw(ancho_precio) << "Precio"<< std::setw(ancho_stock) << "Stock" << "\n";
+            cout <<"\t\t----------------------------------------------------------------"<<endl;
             for (const auto& productos : productos) {
-                std::cout <<"\t\t"<< std::left << std::setw(ancho_nombre) << productos.nombre<< std::setw(ancho_precio) << productos.precio<< std::setw(ancho_stock) << productos.cantidad << "\n";
+                std::cout <<"\t\t"<< std::left <<std::setw(ancho_fecha)<<obtenerFechaActual()<< std::setw(ancho_nombre) << productos.nombre<< std::setw(ancho_precio) << productos.precio<< std::setw(ancho_stock) << productos.cantidad << "\n";
             }
             cout << endl;
             cout <<"\t\t1. Regresar.."<<endl;
@@ -290,6 +293,14 @@ void proveedores(){
 //funcion ventas
 void ventas_realizadas(){
     cout <<"\t\t\t..::Ventas realizadas::.."<<endl;
+}
+
+string obtenerFechaActual() {
+    std::time_t tiempoActual = std::time(nullptr);
+    std::tm* fecha = std::localtime(&tiempoActual);
+    char fechaActual[11];
+    std::strftime(fechaActual, sizeof(fechaActual), "%d/%m/%Y", fecha);
+    return fechaActual;
 }
 
 
