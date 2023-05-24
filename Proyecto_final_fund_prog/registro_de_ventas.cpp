@@ -3,16 +3,19 @@
 #include <vector>
 #include <stdio.h>
 #include<limits> // Para validacion de inputs
-#include <ctime> // Trabajo con fecha del PC
 #include <iomanip> // Para setw() y left
+#include <ctime> // Para trabajar con fechas y tiempos
+
+//namespace
 
 using namespace std;
+
 //establecer un administrador
 #define admin "admin"
 #define pass "admin"
 
 /*  
-                        -----   PROYECTO BANCA VIRTUAL -----
+            ----- PROYECTO FINAL FUNDAMENTOS PROG. -----
 CONTENIDO DEL CODIGO:
 - LOGIN                                             [SUCCESS]
 - CREAR USUARIOS                                    [SUCCESS]
@@ -403,4 +406,12 @@ int main() {
 }
 
 
+//funcion fecha tablas
+std::string obtenerFechaActual() {
+    std::time_t tiempoActual = std::time(nullptr);
+    std::tm* fecha = std::localtime(&tiempoActual);
+    char fechaActual[11];
+    std::strftime(fechaActual, sizeof(fechaActual), "%d/%m/%Y", fecha);
+    return fechaActual;
+}
 */
