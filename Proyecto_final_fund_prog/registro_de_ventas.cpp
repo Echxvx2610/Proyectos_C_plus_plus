@@ -305,124 +305,82 @@ string obtenerFechaActual() {
 
 
 /*
-
+***************************************************************************************
+//funcion vistas de ventas
 #include <iostream>
 #include <vector>
+#include <string>
 
-struct Venta {
-    std::string producto;
+using namespace std;
+
+// Estructura para representar un producto en el inventario
+struct Producto {
+    string nombre;
     float precio;
     int cantidad;
 };
 
-void agregarVenta(std::vector<Venta>& ventas) {
-    Venta venta;
-    std::cout << "Ingrese el nombre del producto: ";
-    std::cin >> venta.producto;
-    std::cout << "Ingrese el precio del producto: ";
-    std::cin >> venta.precio;
-    std::cout << "Ingrese la cantidad vendida: ";
-    std::cin >> venta.cantidad;
-    
-    ventas.push_back(venta);
-    std::cout << "Venta registrada correctamente.\n";
-}
-
-void mostrarVentas(const std::vector<Venta>& ventas) {
-    if (ventas.empty()) {
-        std::cout << "No hay ventas registradas.\n";
-    } else {
-        std::cout << "Registro de ventas:\n";
-        for (const auto& venta : ventas) {
-            std::cout << "Producto: " << venta.producto << "\n";
-            std::cout << "Precio: $" << venta.precio << "\n";
-            std::cout << "Cantidad: " << venta.cantidad << "\n";
-            std::cout << "Total: $" << venta.precio * venta.cantidad << "\n";
-            std::cout << "------------------------\n";
-        }
-    }
-}
-
-int main() {
-    std::vector<Venta> ventas;
-    int opcion;
-
-    do {
-        std::cout << "----- Registro de Ventas -----\n";
-        std::cout << "1. Agregar venta\n";
-        std::cout << "2. Mostrar ventas\n";
-        std::cout << "3. Salir\n";
-        std::cout << "Seleccione una opción: ";
-        std::cin >> opcion;
-        
-        switch (opcion) {
-            case 1:
-                agregarVenta(ventas);
-                break;
-            case 2:
-                mostrarVentas(ventas);
-                break;
-            case 3:
-                std::cout << "Saliendo del programa.\n";
-                break;
-            default:
-                std::cout << "Opción inválida. Por favor, intente nuevamente.\n";
-                break;
-        }
-        
-        std::cout << "\n";
-    } while (opcion != 3);
-
-    return 0;
-}
-
-***************************************************************************************
-Tabla dinamica para inventario y ventas
-
-#include <iostream>
-#include <vector>
-#include <string>
-#include <iomanip> // Para setw() y left
-
-struct Producto {
-    std::string nombre;
-    double precio;
-    int stock;
+// Estructura para representar un registro de venta
+struct RegistroVenta {
+    string nombre;
+    float precio;
+    int cantidad;
 };
 
 int main() {
-    std::vector<Producto> productos;
-
-    // Agregar productos a la lista
-    productos.push_back({"Aceite", 10.99, 5});
-    productos.push_back({"Brocha", 20.49, 3});
-    productos.push_back({"Tornillo M2", 15.75, 8});
-
-    // Establecer ancho fijo para cada columna
-    const int ancho_nombre = 20;
-    const int ancho_precio = 10;
-    const int ancho_stock = 10;
-
-    // Imprimir la tabla
-    std::cout << std::left << std::setw(ancho_nombre) << "Nombre"
-              << std::setw(ancho_precio) << "Precio"
-              << std::setw(ancho_stock) << "Stock" << "\n";
-    for (const auto& producto : productos) {
-        std::cout << std::left << std::setw(ancho_nombre) << producto.nombre
-                  << std::setw(ancho_precio) << producto.precio
-                  << std::setw(ancho_stock) << producto.stock << "\n";
+    // Crear el vector de inventario
+    vector<Producto> inventario;
+    
+    // Agregar algunos productos al inventario
+    Producto producto1 = {"Camisa", 19.99, 10};
+    Producto producto2 = {"Pantalón", 29.99, 5};
+    inventario.push_back(producto1);
+    inventario.push_back(producto2);
+    
+    // Mostrar el inventario inicial
+    cout << "Inventario inicial:" << endl;
+    for (const Producto& producto : inventario) {
+        cout << "Producto: " << producto.nombre << ", Cantidad: " << producto.cantidad << endl;
     }
-
+    
+    // Vector de registros de venta
+    vector<RegistroVenta> registrosVenta;
+    
+    // Realizar una venta
+    int indiceProductoVendido = 0;
+    int cantidadVendida = 3;
+    
+    if (inventario[indiceProductoVendido].cantidad >= cantidadVendida) {
+        // Crear un nuevo registro de venta
+        RegistroVenta venta;
+        venta.nombre = inventario[indiceProductoVendido].nombre;
+        venta.precio = inventario[indiceProductoVendido].precio;
+        venta.cantidad = cantidadVendida;
+        
+        // Agregar el registro de venta al vector de registrosVenta
+        registrosVenta.push_back(venta);
+        
+        // Actualizar la cantidad de productos en el inventario
+        inventario[indiceProductoVendido].cantidad -= cantidadVendida;
+        
+        cout << "Venta realizada con éxito." << endl;
+    } else {
+        cout << "No hay suficiente cantidad de productos en el inventario para la venta." << endl;
+    }
+    
+    // Mostrar el inventario después de la venta
+    cout << "Inventario después de la venta:" << endl;
+    for (const Producto& producto : inventario) {
+        cout << "Producto: " << producto.nombre << ", Cantidad: " << producto.cantidad << endl;
+    }
+    
+    // Mostrar los registros de venta
+    cout << "Registros de venta:" << endl;
+    for (const RegistroVenta& venta : registrosVenta) {
+        cout << "Producto: " << venta.nombre << ", Cantidad: " << venta.cantidad << ", Precio: " << venta.precio << endl;
+    }
+    
     return 0;
 }
 
-
-//funcion fecha tablas
-std::string obtenerFechaActual() {
-    std::time_t tiempoActual = std::time(nullptr);
-    std::tm* fecha = std::localtime(&tiempoActual);
-    char fechaActual[11];
-    std::strftime(fechaActual, sizeof(fechaActual), "%d/%m/%Y", fecha);
-    return fechaActual;
-}
 */
