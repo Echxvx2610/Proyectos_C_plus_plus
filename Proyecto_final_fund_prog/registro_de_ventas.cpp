@@ -44,15 +44,15 @@ struct Producto{
     float precio;
     int cantidad;
 };
-vector<Producto> productos;
+vector<Producto> Inventario;
 
 //Estructura Venta
-struct Venta{
+struct RegistroVenta{
     string nombre;
     float precio;
     int cantidad;
 };
-vector<Venta> ventas;
+vector<RegistroVenta> registrosVenta;
 
 //Estructura User
 struct User {
@@ -143,7 +143,7 @@ void login() {
             found = true;
             int option;
             cout << "\n\t\t\t..::Bienvenido " << username_n << "!::.. \n";
-            cout << "\t\t1. Registrar venta"<<endl;
+            cout << "\t\t1. Registro de venta"<<endl;
             cout << "\t\t2. Inventario"<<endl;
             cout << "\t\t3. Comprar a provedores"<<endl;
             cout << "\t\t4. Ventas realizadas"<<endl;
@@ -183,7 +183,7 @@ void login() {
 //funcion registro_de_venta
 void registro_de_venta(){
     string nombre,precio,cantidad;
-    int opcion;
+    int opcion,a,b,c,d;
     cout <<"\t\t\t..::Registro de Venta::..\n"<<endl;
     cin.ignore();
     cout << "\tNombre del producto: ";getline(cin,nombre);
@@ -191,7 +191,7 @@ void registro_de_venta(){
     cout<< "\tPrecio: $";getline(cin,precio);
     cin.ignore();
     cout << "\tCantidad:";getline(cin,cantidad);
-    ventas.push_back({nombre,stof(precio),stoi(cantidad)});
+    registrosVenta.push_back({nombre,stof(precio),stoi(cantidad)});
     cout << "\tVenta registrada correctamente!.\n";
     cout <<"\t1. Realizar otro registro.."<<endl;
     cout <<"\t2. Salir.."<<endl;
@@ -228,7 +228,7 @@ void inventario(){
                 cout << "\t\tNombre del producto: ";getline(cin,nombre);
                 cout<< "\t\tPrecio: $";getline(cin,precio);
                 cout << "\t\tStock:";getline(cin,cantidad);
-                productos.push_back({nombre,stof(precio),stoi(cantidad)});//stof: convertir string a float / stoi: convertir string a int
+                Inventario.push_back({nombre,stof(precio),stoi(cantidad)});//stof: convertir string a float / stoi: convertir string a int
                 cout <<"\n\t\t1. Ingresar otro producto.."<<endl;
                 cout<<"\t\t2. Regresar.."<<endl;
                 cout <<"\t\tIngrese una Opcion: ";cin>>a;
@@ -246,7 +246,7 @@ void inventario(){
             cout <<"\t\t----------------------------------------------------------------"<<endl;
             std::cout<<"\t\t"<< std::left <<std::setw(ancho_fecha)<<" Fecha"<< std::setw(ancho_nombre) << "Nombre"<< std::setw(ancho_precio) << "Precio"<< std::setw(ancho_stock) << "Stock" << "\n";
             cout <<"\t\t----------------------------------------------------------------"<<endl;
-            for (const auto& productos : productos) {
+            for (const auto& productos : Inventario) {
                 std::cout <<"\t\t"<< std::left <<std::setw(ancho_fecha)<<obtenerFechaActual()<< std::setw(ancho_nombre) << productos.nombre<< std::setw(ancho_precio) << productos.precio<< std::setw(ancho_stock) << productos.cantidad << "\n";
             }
             cout << endl;
@@ -261,7 +261,7 @@ void inventario(){
             }
             break;
         case 3:
-            productos.pop_back();
+            Inventario.pop_back();
             cout << "\n\t\tProducto eliminado con exito!!\n"<<endl;
             cout <<"\t\t1. Regresar.."<<endl;
             cout<<"\t\t2. Salir.."<<endl;
@@ -293,6 +293,7 @@ void proveedores(){
 //funcion ventas
 void ventas_realizadas(){
     cout <<"\t\t\t..::Ventas realizadas::.."<<endl;
+    cout <<"\t\t\t posiblemente funcion solo leera el array RegistrosVenta"<<endl;
 }
 
 string obtenerFechaActual() {
