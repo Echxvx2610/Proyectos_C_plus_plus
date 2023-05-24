@@ -539,6 +539,71 @@ int main() {
 }
 *****************************************************************************************
 comprobar que exista Producto y cantidad 
+#include <iostream>
+#include <vector>
+#include <string>
+
+// Estructura Producto
+struct Producto {
+    std::string nombre;
+    double precio;
+    int stock;
+};
+
+// Estructura RegistroVentas
+struct RegistroVentas {
+    std::string nombre;
+    double precio;
+    int cantidadVendida;
+};
+
+// Vectores globales
+std::vector<Producto> Inventario;
+std::vector<RegistroVentas> Registro;
+
+// Función para registrar una venta
+void registrarVenta(const std::string& nombreProducto, int cantidad) {
+    // Buscar el producto en el inventario
+    for (auto& producto : Inventario) {
+        if (producto.nombre == nombreProducto) {
+            // Verificar si hay suficiente stock
+            if (producto.stock >= cantidad) {
+                // Calcular el total de la venta
+                double totalVenta = producto.precio * cantidad;
+                std::cout << "Total de la venta: " << totalVenta << std::endl;
+
+                // Registrar la venta en el vector Registro
+                RegistroVentas venta;
+                venta.nombre = nombreProducto;
+                venta.precio = producto.precio;
+                venta.cantidadVendida = cantidad;
+                Registro.push_back(venta);
+
+                // Actualizar el stock en el inventario
+                producto.stock -= cantidad;
+            } else {
+                std::cout << "No hay suficiente stock para realizar la venta." << std::endl;
+            }
+            return;
+        }
+    }
+
+    // Si el producto no se encuentra en el inventario
+    std::cout << "El producto no está disponible en el inventario." << std::endl;
+}
+
+int main() {
+    // Ejemplo de uso
+    Producto producto1 = { "Producto 1", 10.0, 5 };
+    Producto producto2 = { "Producto 2", 15.0, 10 };
+    Inventario.push_back(producto1);
+    Inventario.push_back(producto2);
+
+    registrarVenta("Producto 1", 3);  // Registra una venta de 3 unidades del Producto 1
+    registrarVenta("Producto 2", 12); // Intenta registrar una venta de 12 unidades del Producto 2 (no hay suficiente stock)
+
+    return 0;
+}
 
 
 */
