@@ -56,10 +56,43 @@ struct User {
 vector<User> users;
 
 //Marco de funciones
+void createUser();
+void login();
+void menu();
 void registro_de_venta();
 void inventario();
 void proveedores();
 void ventas_realizadas();
+
+
+//funcion principal
+int main() {
+    int option;
+    while (true) {
+        cout<<"\n\t\t======================================================================\n"<<endl;
+        cout<<"\t\t\t *****// Registro de venta (Nombre local) //*****"<<endl;
+	    cout<<"\t\t======================================================================\n\n"<<endl;
+        cout << "\t1. Crear usuario" << endl;
+        cout << "\t2. Iniciar sesión" << endl;
+        cout << "\t3. Salir" << endl;
+        cout << "\tIngrese una opción:  ";;
+        cin >> option;
+        if (option == 1) {
+            cout <<'\n';
+            system("cls");
+            createUser();
+        } else if (option == 2) {
+            system("cls");
+            login();
+        } else if (option == 3) {
+            break;
+        } else {
+            cout << "Opción inválida. Intente de nuevo." << endl;
+        }
+    }
+    return 0;
+}
+
 
 //funcion creacion de usuarios
 void createUser() {
@@ -139,33 +172,7 @@ void login() {
         cout << "\t\tRevisa tu usuario y contraseña, o solicita una cuenta\n"<<endl;
     }
 }
-//funcion principal
-int main() {
-    int option;
-    while (true) {
-        cout<<"\n\t\t======================================================================\n"<<endl;
-        cout<<"\t\t\t *****// Registro de venta (Nombre local) //*****"<<endl;
-	    cout<<"\t\t======================================================================\n\n"<<endl;
-        cout << "\t1. Crear usuario" << endl;
-        cout << "\t2. Iniciar sesión" << endl;
-        cout << "\t3. Salir" << endl;
-        cout << "\tIngrese una opción:  ";;
-        cin >> option;
-        if (option == 1) {
-            cout <<'\n';
-            system("cls");
-            createUser();
-        } else if (option == 2) {
-            system("cls");
-            login();
-        } else if (option == 3) {
-            break;
-        } else {
-            cout << "Opción inválida. Intente de nuevo." << endl;
-        }
-    }
-    return 0;
-}
+
 //funcion registro_de_venta
 void registro_de_venta(){
     string nombre,precio,cantidad;
@@ -177,7 +184,7 @@ void registro_de_venta(){
     cout<< "\tPrecio: $";getline(cin,precio);
     cin.ignore();
     cout << "\tCantidad:";getline(cin,cantidad);
-    ventas.push_back({nombre,stof(precio),stof(cantidad)});
+    ventas.push_back({nombre,stof(precio),stoi(cantidad)});
     cout << "\tVenta registrada correctamente!.\n";
     cout <<"\t1. Realizar otro registro.."<<endl;
     cout <<"\t2. Salir.."<<endl;
@@ -188,6 +195,7 @@ void registro_de_venta(){
         exit(0);
     }
 }
+
 //funcion inventario
 void inventario(){
     string nombre,precio,cantidad;
@@ -202,14 +210,24 @@ void inventario(){
     switch (option){
         case 1:
         //posiblemente agregar un while para introduccir varios articulos o productos
-            cin.ignore();
-            cout << "\tNombre del producto: ";getline(cin,nombre);
-            cin.ignore();
-            cout<< "\tPrecio: $";getline(cin,precio);
-            cin.ignore();
-            cout << "\tStock:";getline(cin,cantidad);
-            productos.push_back({nombre,stof(precio),stof(cantidad)});
-            inventario();
+            a = 1;
+            while(a==1){
+                cin.ignore();
+                cout << "\t\tNombre del producto: ";getline(cin,nombre);
+                cout<< "\t\tPrecio: $";getline(cin,precio);
+                cout << "\t\tStock:";getline(cin,cantidad);
+                productos.push_back({nombre,stof(precio),stoi(cantidad)});//stof: convertir string a float / stoi: convertir string a int
+                cout <<"\n\t\t1. Ingresar otro producto.."<<endl;
+                cout<<"\t\t2. Regresar.."<<endl;
+                cout <<"\t\tIngrese una Opcion: ";cin>>a;
+                cout <<endl;
+                if(a==1){
+                    a = 1;
+                }
+                else if(a==2){
+                    inventario();
+                }
+            }
             break;
         case 2:
             cout <<"---------------------------------------------"<<endl;
@@ -217,7 +235,6 @@ void inventario(){
             cout <<"---------------------------------------------"<<endl;
             for(int i = 0; i < productos.size(); i++){
                 cout <<"\t"<<productos[i].nombre<<"\t\t"<<"$"<<productos[i].precio<<"\t\t"<<productos[i].cantidad<<endl;
-                cout<<"\n";
             }
             cout <<"\t\t1. Regresar.."<<endl;
             cout<<"\t\t2. Salir.."<<endl;
@@ -252,10 +269,14 @@ void inventario(){
             cout << "Opcion invalida" << endl;
     }
 }
+
+//funcion proveedores
 void proveedores(){
     cout <<"\t\t\t..::Proveedores::.."<<endl;
     cout <<"\t\t Proximamente......"<<endl;
 }
+
+//funcion ventas
 void ventas_realizadas(){
     cout <<"\t\t\t..::Ventas realizadas::.."<<endl;
 }
