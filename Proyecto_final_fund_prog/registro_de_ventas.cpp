@@ -6,13 +6,16 @@
 #include <iomanip> // Para setw() y left
 #include <ctime> // Para trabajar con fechas y tiempos
 
-//namespace
+//namespace's
 
 using namespace std;
 
 //establecer un administrador
-#define admin "admin"
-#define pass "admin"
+#define admin "admin" //cambiar usuario por dueño
+#define pass "admin" //cambiar contraseña por contraseña dueño
+
+
+//variables globales
 
 /*  
             ----- PROYECTO FINAL FUNDAMENTOS PROG. -----
@@ -182,14 +185,15 @@ void login() {
 //funcion registro_de_venta
 void registro_de_venta(){
     string nombre,precio,cantidad;
+    string username_n, password_n;
     int option,a,b,c,d;
+    
     // Establecer ancho fijo para cada columna
     const int ancho_fecha = 12;
     const int ancho_nombre = 20;
     const int ancho_precio = 10;
     const int ancho_stock = 10;
     const int ancho_total = 10;
-    auto total = 10;
     cout <<"\t\t\t..::Registro de Ventas::..\n"<<endl;
     cout <<"\t\t1. Registrar venta"<<endl;
     cout <<"\t\t2. Ver ventas realizadas"<<endl;
@@ -206,6 +210,7 @@ void registro_de_venta(){
                 cout << "\t\tNombre del producto: ";getline(cin,nombre);
                 cout<< "\t\tPrecio: $";getline(cin,precio);
                 cout << "\t\tCantidad vendida:";getline(cin,cantidad);
+                //validar si existe el producto en inventario y que se tenga suficiente cantidad del mismo
                 registrosVenta.push_back({nombre,stof(precio),stoi(cantidad)});//stof: convertir string a float / stoi: convertir string a int
                 cout <<"\n\t\t1. Ingresar otra venta.."<<endl;
                 cout<<"\t\t2. Regresar.."<<endl;
@@ -240,8 +245,22 @@ void registro_de_venta(){
             break;
             
         case 3:
+            cout <<"\n\t\t...:::Acceso para administrador,por favor identifiquese!!:::."<<endl;
+            cout<<"\n\t\t======================================================================\n"<<endl;
+            cout <<"\t\t!!!!*****Acceso Restringido || Solo administradores ||*****!!!!"<<endl;
+	        cout<<"\t\t======================================================================\n\n"<<endl;
+            cout <<"\tPor favor autentifiquese o solicite ayuda de un administrador.."<<endl;
+            cout << "\tUsuario: ";cin >> username_n;
+            cout <<"\tContraseña: ";cin>>password_n;
+            if (users[0].username_n == username_n && users[0].password_n == password_n){
+                cout << "\tBienvenid@ "<<username_n<<endl<<endl;
+                registrosVenta.pop_back();
+            }
+            else{
+                cout<<"\t Usuario incorrecto!"<<endl;
+                registro_de_venta();
+            }
             break;
-            
         case 4:
             break;
         
@@ -257,6 +276,7 @@ void registro_de_venta(){
 void inventario(){
     string nombre,precio,cantidad;
     int option,a,b,c,d;
+    int total = 10; //valor de momento en lo que soluciono issue
     // Establecer ancho fijo para cada columna
     const int ancho_fecha = 12;
     const int ancho_nombre = 20;
@@ -358,6 +378,7 @@ string obtenerFechaActual() {
 /*
 ***************************************************************************************
 //funcion vistas de ventas
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -433,5 +454,91 @@ int main() {
     
     return 0;
 }
+
+***********************************************************************************
+codigo para total de venta
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+struct Producto {
+    string nombre;
+    double precio;
+    int cantidad;
+};
+
+struct RegistroVenta {
+    string nombreProducto;
+    int cantidadVendida;
+    double precioVenta;
+};
+
+vector<Producto> inventario;
+vector<RegistroVenta> registrosVentas;
+
+void realizarVenta() {
+    string nombreProducto;
+    int cantidadVendida;
+
+    cout << "Ingrese el nombre del producto: ";
+    cin >> nombreProducto;
+
+    cout << "Ingrese la cantidad vendida: ";
+    cin >> cantidadVendida;
+
+    // Buscar el producto en el inventario
+    for (auto& producto : inventario) {
+        if (producto.nombre == nombreProducto) {
+            // Verificar si hay suficiente cantidad en inventario
+            if (producto.cantidad >= cantidadVendida) {
+                // Calcular el total de la venta
+                double totalVenta = cantidadVendida * producto.precio;
+
+                // Crear un objeto RegistroVenta y agregarlo al vector registrosVentas
+                RegistroVenta registro;
+                registro.nombreProducto = nombreProducto;
+                registro.cantidadVendida = cantidadVendida;
+                registro.precioVenta = totalVenta;
+                registrosVentas.push_back(registro);
+
+                // Descontar la cantidad vendida del inventario
+                producto.cantidad -= cantidadVendida;
+
+                cout << "Venta registrada correctamente. Total de la venta: " << totalVenta << endl;
+            } else {
+                cout << "No hay suficiente cantidad en inventario." << endl;
+            }
+            break;
+        }
+    }
+}
+
+void mostrarVentas() {
+    // Código para mostrar las ventas registradas
+    for (const auto& venta : registrosVentas) {
+        cout << "Producto: " << venta.nombreProducto << endl;
+        cout << "Cantidad vendida: " << venta.cantidadVendida << endl;
+        cout << "Total de la venta: " << venta.precioVenta << endl;
+        cout << endl;
+    }
+}
+
+int main() {
+    // ...
+
+    realizarVenta();
+    mostrarVentas();
+
+    // ...
+    
+
+
+    return 0;
+}
+*****************************************************************************************
+comprobar que exista Producto y cantidad 
+
 
 */
