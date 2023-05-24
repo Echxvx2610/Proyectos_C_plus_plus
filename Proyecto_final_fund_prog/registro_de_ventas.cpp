@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include<limits> // Para validacion de inputs
 #include <ctime> // Trabajo con fecha del PC
+#include <iomanip> // Para setw() y left
 
 using namespace std;
 //establecer un administrador
@@ -13,12 +14,12 @@ using namespace std;
 /*  
                         -----   PROYECTO BANCA VIRTUAL -----
 CONTENIDO DEL CODIGO:
-- LOGIN                                             [IN PROCESS]
-- CREAR USUARIOS                                    [IN PROCESS]
-- FUNCION INVENTARIO                                [IN PROCESS]
+- LOGIN                                             [SUCCESS]
+- CREAR USUARIOS                                    [SUCCESS]
+- FUNCION INVENTARIO                                [SUCCESS]
 - FUNCION REGISTRO DE VENTA                         [IN PROCESS]
 - FUNCION VISTA DE VENTAS                           [IN PROCESS]
-- FUNCION PROOVEDORES                               [MAYBE]
+- FUNCION PROOVEDORES                               [MAYBE LATER]
 
 CONDICIONES AGREGADAS:
 -CONDICION GENERAL DE REGRESO                       [IN PROCESS]
@@ -201,6 +202,10 @@ void registro_de_venta(){
 void inventario(){
     string nombre,precio,cantidad;
     int option,a,b,c,d;
+    // Establecer ancho fijo para cada columna
+    const int ancho_nombre = 20;
+    const int ancho_precio = 10;
+    const int ancho_stock = 10;
     cout <<"\t\t\t..::Inventario::..\n"<<endl;
     cout <<"\t\t1. Agregar producto"<<endl;
     cout <<"\t\t2. Ver productos"<<endl;
@@ -231,12 +236,14 @@ void inventario(){
             }
             break;
         case 2:
+            // Imprimir la tabla
             cout <<"---------------------------------------------"<<endl;
-            cout <<"\t Producto     Precio(Pesos)       Stock"<<endl;
+            std::cout<<"\t\t"<< std::left << std::setw(ancho_nombre) << "Nombre"<< std::setw(ancho_precio) << "Precio"<< std::setw(ancho_stock) << "Stock" << "\n";
             cout <<"---------------------------------------------"<<endl;
-            for(int i = 0; i < productos.size(); i++){
-                cout <<"\t"<<productos[i].nombre<<"\t\t"<<"$"<<productos[i].precio<<"\t\t"<<productos[i].cantidad<<endl;
+            for (const auto& productos : productos) {
+                std::cout <<"\t\t"<< std::left << std::setw(ancho_nombre) << productos.nombre<< std::setw(ancho_precio) << productos.precio<< std::setw(ancho_stock) << productos.cantidad << "\n";
             }
+            cout << endl;
             cout <<"\t\t1. Regresar.."<<endl;
             cout<<"\t\t2. Salir.."<<endl;
             cout <<"\t\tIngrese una Opcion: ";cin>>b;
@@ -355,6 +362,45 @@ int main() {
     return 0;
 }
 
+***************************************************************************************
+Tabla dinamica para inventario y ventas
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <iomanip> // Para setw() y left
+
+struct Producto {
+    std::string nombre;
+    double precio;
+    int stock;
+};
+
+int main() {
+    std::vector<Producto> productos;
+
+    // Agregar productos a la lista
+    productos.push_back({"Aceite", 10.99, 5});
+    productos.push_back({"Brocha", 20.49, 3});
+    productos.push_back({"Tornillo M2", 15.75, 8});
+
+    // Establecer ancho fijo para cada columna
+    const int ancho_nombre = 20;
+    const int ancho_precio = 10;
+    const int ancho_stock = 10;
+
+    // Imprimir la tabla
+    std::cout << std::left << std::setw(ancho_nombre) << "Nombre"
+              << std::setw(ancho_precio) << "Precio"
+              << std::setw(ancho_stock) << "Stock" << "\n";
+    for (const auto& producto : productos) {
+        std::cout << std::left << std::setw(ancho_nombre) << producto.nombre
+                  << std::setw(ancho_precio) << producto.precio
+                  << std::setw(ancho_stock) << producto.stock << "\n";
+    }
+
+    return 0;
+}
 
 
 */
