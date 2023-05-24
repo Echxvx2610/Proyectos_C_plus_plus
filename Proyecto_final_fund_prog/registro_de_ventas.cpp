@@ -30,8 +30,7 @@ CONDICIONES AGREGADAS:
 -FECHA EN TABLA DINAMICA                            [IN PROCESS]
 
 ISSUE
-- ........
-...
+- Registro de venta no descuenta Inventario
 
 */
 
@@ -94,7 +93,7 @@ int main() {
         } else if (option == 3) {
             break;
         } else {
-            cout << "Opción inválida. Intente de nuevo." << endl;
+            cout <<"\tOpción inválida. Intente de nuevo." << endl;
         }
     }
     return 0;
@@ -183,23 +182,74 @@ void login() {
 //funcion registro_de_venta
 void registro_de_venta(){
     string nombre,precio,cantidad;
-    int opcion,a,b,c,d;
-    cout <<"\t\t\t..::Registro de Venta::..\n"<<endl;
-    cin.ignore();
-    cout << "\tNombre del producto: ";getline(cin,nombre);
-    cin.ignore();
-    cout<< "\tPrecio: $";getline(cin,precio);
-    cin.ignore();
-    cout << "\tCantidad:";getline(cin,cantidad);
-    registrosVenta.push_back({nombre,stof(precio),stoi(cantidad)});
-    cout << "\tVenta registrada correctamente!.\n";
-    cout <<"\t1. Realizar otro registro.."<<endl;
-    cout <<"\t2. Salir.."<<endl;
-    cout <<"\tIngrese una opcion: ";cin>>opcion;
-    if(opcion == 1){
-        registro_de_venta();
-    }else{
-        exit(0);
+    int option,a,b,c,d;
+    // Establecer ancho fijo para cada columna
+    const int ancho_fecha = 12;
+    const int ancho_nombre = 20;
+    const int ancho_precio = 10;
+    const int ancho_stock = 10;
+    const int ancho_total = 10;
+    auto total = 10;
+    cout <<"\t\t\t..::Registro de Ventas::..\n"<<endl;
+    cout <<"\t\t1. Registrar venta"<<endl;
+    cout <<"\t\t2. Ver ventas realizadas"<<endl;
+    cout <<"\t\t3. Eliminar venta"<<endl;
+    cout <<"\t\t4. Regresar"<<endl;
+    cout <<"\t\t5. Salir"<<endl;
+    cout <<"\t\tIngrese una opcion: ";cin>>option;
+    cout<<endl;
+    switch(option){
+        case 1:
+            a = 1;
+            while(a==1){
+                cin.ignore();
+                cout << "\t\tNombre del producto: ";getline(cin,nombre);
+                cout<< "\t\tPrecio: $";getline(cin,precio);
+                cout << "\t\tCantidad vendida:";getline(cin,cantidad);
+                registrosVenta.push_back({nombre,stof(precio),stoi(cantidad)});//stof: convertir string a float / stoi: convertir string a int
+                cout <<"\n\t\t1. Ingresar otra venta.."<<endl;
+                cout<<"\t\t2. Regresar.."<<endl;
+                cout <<"\t\tIngrese una Opcion: ";cin>>a;
+                cout <<endl;
+                if(a==1){
+                    a = 1;
+                }
+                else if(a==2){
+                    registro_de_venta();
+                }
+            }
+            break;
+        case 2:
+            // Imprimir la tabla
+            cout <<"\t\t----------------------------------------------------------------"<<endl;
+            std::cout<<"\t\t"<< std::left <<std::setw(ancho_fecha)<<" Fecha"<< std::setw(ancho_nombre) << "Nombre"<< std::setw(ancho_precio) << "Precio"<< std::setw(ancho_stock) << "Cantidad" <<std::setw(ancho_total)<<"Total"<<"\n";
+            cout <<"\t\t----------------------------------------------------------------"<<endl;
+            for (const auto& venta : registrosVenta) {
+                std::cout <<"\t\t"<< std::left <<std::setw(ancho_fecha)<<obtenerFechaActual()<< std::setw(ancho_nombre) << venta.nombre<< std::setw(ancho_precio) << venta.precio<< std::setw(ancho_stock) << venta.cantidad<<std::setw(ancho_total)<<total<< "\n";
+            }
+            cout << endl;
+            cout <<"\t\t1. Regresar.."<<endl;
+            cout<<"\t\t2. Salir.."<<endl;
+            cout <<"\t\tIngrese una Opcion: ";cin>>b;
+            if(b==1){
+                inventario();
+            }
+            else{
+                exit(0);
+            }
+            break;
+            
+        case 3:
+            break;
+            
+        case 4:
+            break;
+        
+        case 5:
+            break;
+        
+        default:
+        cout << "Opcion invalida" << endl;
     }
 }
 
@@ -243,7 +293,7 @@ void inventario(){
             break;
         case 2:
             // Imprimir la tabla
-            cout <<"\t\t----------------------------------------------------------------"<<endl;
+            cout <<"\n\t\t----------------------------------------------------------------"<<endl;
             std::cout<<"\t\t"<< std::left <<std::setw(ancho_fecha)<<" Fecha"<< std::setw(ancho_nombre) << "Nombre"<< std::setw(ancho_precio) << "Precio"<< std::setw(ancho_stock) << "Stock" << "\n";
             cout <<"\t\t----------------------------------------------------------------"<<endl;
             for (const auto& productos : Inventario) {
