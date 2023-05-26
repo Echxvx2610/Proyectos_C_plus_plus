@@ -1,21 +1,11 @@
 #include <iostream>
-#include <string>
-#include <vector>
+#include <string>   
+#include <vector>   //trabajar con Vectores  
 #include <stdio.h>
-#include<limits> // Para validacion de inputs
-#include <iomanip> // Para setw() y left
-#include <ctime> // Para trabajar con fechas y tiempos
+#include<limits>    // Para validacion de inputs
+#include <iomanip> // Para setw() y left (tabla dinamica)
+#include <ctime>   // Para trabajar con fechas y tiempos
 
-//namespace's
-
-using namespace std;
-
-//establecer un administrador
-#define admin "admin" //cambiar usuario por dueño
-#define pass "admin" //cambiar contraseña por contraseña dueño
-
-
-//variables globales
 
 /*  
             ----- PROYECTO FINAL FUNDAMENTOS PROG. -----
@@ -28,9 +18,9 @@ CONTENIDO DEL CODIGO:
 - FUNCION PROOVEDORES                               [MAYBE LATER]
 
 CONDICIONES AGREGADAS:
--CONDICION GENERAL DE REGRESO                       [IN PROCESS]
--TABLA DINAMICA PARA PRODUTOS                        [IN PROCESS]
--FECHA EN TABLA DINAMICA                            [IN PROCESS]
+-CONDICION GENERAL DE REGRESO                       [SUCCESS]
+-TABLA DINAMICA PARA PRODUTOS                       [SUCCESS]
+-FECHA EN TABLA DINAMICA                            [SUCCESS]
 
 ISSUE
 - Registro de venta no descuenta Inventario
@@ -38,13 +28,23 @@ ISSUE
 */
 
 
+//namespace's
+
+using namespace std;
+
+//Establecer un administrador
+#define admin "admin" //cambiar usuario por dueño
+#define pass "admin" //cambiar contraseña por contraseña dueño
+
+
+//variables globales
 
 
 //Estructura Producto
 struct Producto{
     string nombre;
     float precio;
-    int cantidad;
+    int cantidadI;
 };
 vector<Producto> Inventario;
 
@@ -52,7 +52,8 @@ vector<Producto> Inventario;
 struct RegistroVenta{
     string nombre;
     float precio;
-    int cantidad;
+    int cantidadV;
+    float total;
 };
 vector<RegistroVenta> registrosVenta;
 
@@ -86,16 +87,20 @@ int main() {
         cout << "\t3. Salir" << endl;
         cout << "\tIngrese una opción:  ";;
         cin >> option;
-        if (option == 1) {
-            cout <<'\n';
+        switch(option){
+            case 1:
+                system("cls");
+                createUser();
+                break;
+            case 2:
+                system("cls");
+                login();
+                break;
+            case 3:
+                system("cls");
+                break;
+            default:
             system("cls");
-            createUser();
-        } else if (option == 2) {
-            system("cls");
-            login();
-        } else if (option == 3) {
-            break;
-        } else {
             cout <<"\tOpción inválida. Intente de nuevo." << endl;
         }
     }
@@ -184,10 +189,10 @@ void login() {
 
 //funcion registro_de_venta
 void registro_de_venta(){
-    string nombre,precio,cantidad;
+    string nombre,precio,cantidadV;
     string username_n, password_n;
     int option,a,b,c,d;
-    
+    float total;
     // Establecer ancho fijo para cada columna
     const int ancho_fecha = 12;
     const int ancho_nombre = 20;
@@ -207,11 +212,12 @@ void registro_de_venta(){
             a = 1;
             while(a==1){
                 cin.ignore();
+                //falta bloque validar si existe el producto en inventario y que se tenga suficiente cantidad del mismo
                 cout << "\t\tNombre del producto: ";getline(cin,nombre);
                 cout<< "\t\tPrecio: $";getline(cin,precio);
-                cout << "\t\tCantidad vendida:";getline(cin,cantidad);
-                //validar si existe el producto en inventario y que se tenga suficiente cantidad del mismo
-                registrosVenta.push_back({nombre,stof(precio),stoi(cantidad)});//stof: convertir string a float / stoi: convertir string a int
+                cout << "\t\tCantidad vendida:";getline(cin,cantidadV);
+                total = stof(precio) * stof(cantidadV);
+                registrosVenta.push_back({nombre,stof(precio),stoi(cantidadV),total});//stof: convertir string a float / stoi: convertir string a int
                 cout <<"\n\t\t1. Ingresar otra venta.."<<endl;
                 cout<<"\t\t2. Regresar.."<<endl;
                 cout <<"\t\tIngrese una Opcion: ";cin>>a;
@@ -230,20 +236,22 @@ void registro_de_venta(){
             std::cout<<"\t\t"<< std::left <<std::setw(ancho_fecha)<<" Fecha"<< std::setw(ancho_nombre) << "Nombre"<< std::setw(ancho_precio) << "Precio"<< std::setw(ancho_stock) << "Cantidad" <<std::setw(ancho_total)<<"Total"<<"\n";
             cout <<"\t\t----------------------------------------------------------------"<<endl;
             for (const auto& venta : registrosVenta) {
-                std::cout <<"\t\t"<< std::left <<std::setw(ancho_fecha)<<obtenerFechaActual()<< std::setw(ancho_nombre) << venta.nombre<< std::setw(ancho_precio) << venta.precio<< std::setw(ancho_stock) << venta.cantidad<<std::setw(ancho_total)<<total<< "\n";
+                std::cout <<"\t\t"<< std::left <<std::setw(ancho_fecha)<<obtenerFechaActual()<< std::setw(ancho_nombre) << venta.nombre<< std::setw(ancho_precio) << venta.precio<< std::setw(ancho_stock) << venta.cantidadV<<std::setw(ancho_total)<<venta.total<< "\n";
             }
             cout << endl;
             cout <<"\t\t1. Regresar.."<<endl;
             cout<<"\t\t2. Salir.."<<endl;
             cout <<"\t\tIngrese una Opcion: ";cin>>b;
             if(b==1){
-                inventario();
+                registro_de_venta();
             }
-            else{
+            else if(b==2){
                 exit(0);
             }
+            else{
+                cout << "\t\t Opcion incorrecta!"<<endl;
+            }
             break;
-            
         case 3:
             cout <<"\n\t\t...:::Acceso para administrador,por favor identifiquese!!:::."<<endl;
             cout<<"\n\t\t======================================================================\n"<<endl;
@@ -262,8 +270,9 @@ void registro_de_venta(){
             }
             break;
         case 4:
+            system("cls");
+            menu();
             break;
-        
         case 5:
             break;
         
@@ -274,9 +283,8 @@ void registro_de_venta(){
 
 //funcion inventario
 void inventario(){
-    string nombre,precio,cantidad;
+    string nombre,precio,cantidadI;
     int option,a,b,c,d;
-    int total = 10; //valor de momento en lo que soluciono issue
     // Establecer ancho fijo para cada columna
     const int ancho_fecha = 12;
     const int ancho_nombre = 20;
@@ -297,8 +305,8 @@ void inventario(){
                 cin.ignore();
                 cout << "\t\tNombre del producto: ";getline(cin,nombre);
                 cout<< "\t\tPrecio: $";getline(cin,precio);
-                cout << "\t\tStock:";getline(cin,cantidad);
-                Inventario.push_back({nombre,stof(precio),stoi(cantidad)});//stof: convertir string a float / stoi: convertir string a int
+                cout << "\t\tStock:";getline(cin,cantidadI);
+                Inventario.push_back({nombre,stof(precio),stoi(cantidadI)});//stof: convertir string a float / stoi: convertir string a int
                 cout <<"\n\t\t1. Ingresar otro producto.."<<endl;
                 cout<<"\t\t2. Regresar.."<<endl;
                 cout <<"\t\tIngrese una Opcion: ";cin>>a;
@@ -317,7 +325,7 @@ void inventario(){
             std::cout<<"\t\t"<< std::left <<std::setw(ancho_fecha)<<" Fecha"<< std::setw(ancho_nombre) << "Nombre"<< std::setw(ancho_precio) << "Precio"<< std::setw(ancho_stock) << "Stock" << "\n";
             cout <<"\t\t----------------------------------------------------------------"<<endl;
             for (const auto& productos : Inventario) {
-                std::cout <<"\t\t"<< std::left <<std::setw(ancho_fecha)<<obtenerFechaActual()<< std::setw(ancho_nombre) << productos.nombre<< std::setw(ancho_precio) << productos.precio<< std::setw(ancho_stock) << productos.cantidad << "\n";
+                std::cout <<"\t\t"<< std::left <<std::setw(ancho_fecha)<<obtenerFechaActual()<< std::setw(ancho_nombre) << productos.nombre<< std::setw(ancho_precio) << productos.precio<< std::setw(ancho_stock) << productos.cantidadI << "\n";
             }
             cout << endl;
             cout <<"\t\t1. Regresar.."<<endl;
@@ -326,8 +334,11 @@ void inventario(){
             if(b==1){
                 inventario();
             }
-            else{
+            else if(b==2){
                 exit(0);
+            }
+            else{
+                cout << "\t\t Opcion incorrecta!"<<endl;
             }
             break;
         case 3:
@@ -344,7 +355,8 @@ void inventario(){
             }
             break;
         case 4:
-            exit(0);//agregar condicion para Regresar
+            system("cls");
+            menu();
             break;
         case 5:
             exit(0);
@@ -362,8 +374,36 @@ void proveedores(){
 
 //funcion ventas
 void ventas_realizadas(){
-    cout <<"\t\t\t..::Ventas realizadas::.."<<endl;
-    cout <<"\t\t\t posiblemente funcion solo leera el array RegistrosVenta"<<endl;
+    float total;
+    int b;
+    // Establecer ancho fijo para cada columna
+    const int ancho_fecha = 12;
+    const int ancho_nombre = 20;
+    const int ancho_precio = 10;
+    const int ancho_stock = 10;
+    const int ancho_total = 10;
+    
+    cout <<"\t\t\t\t ..::Ventas realizadas::.."<<endl;
+    // Imprimir la tabla
+    cout <<"\t\t----------------------------------------------------------------"<<endl;
+    std::cout<<"\t\t"<< std::left <<std::setw(ancho_fecha)<<" Fecha"<< std::setw(ancho_nombre) << "Nombre"<< std::setw(ancho_precio) << "Precio"<< std::setw(ancho_stock) << "Cantidad" <<std::setw(ancho_total)<<"Total"<<"\n";
+    cout <<"\t\t----------------------------------------------------------------"<<endl;
+    for (const auto& venta : registrosVenta) {
+              std::cout <<"\t\t"<< std::left <<std::setw(ancho_fecha)<<obtenerFechaActual()<< std::setw(ancho_nombre) << venta.nombre<< std::setw(ancho_precio) << venta.precio<< std::setw(ancho_stock) << venta.cantidadV<<std::setw(ancho_total)<<venta.total<< "\n";
+    }
+    cout << endl;
+    cout <<"\t\t1. Regresar.."<<endl;
+    cout<<"\t\t2. Salir.."<<endl;
+    cout <<"\t\tIngrese una Opcion: ";cin>>b;
+    if(b==1){
+        menu();
+    }
+    else if(b==2){
+        exit(0);
+    }
+    else{
+        cout << "\t\t Opcion incorrecta!"<<endl;
+    }
 }
 
 string obtenerFechaActual() {
@@ -372,6 +412,39 @@ string obtenerFechaActual() {
     char fechaActual[11];
     std::strftime(fechaActual, sizeof(fechaActual), "%d/%m/%Y", fecha);
     return fechaActual;
+}
+
+void menu(){
+    int option;
+    cout << "\n\t\t\t..::Menu principal::.. \n";
+    cout << "\t\t1. Registro de venta"<<endl;
+    cout << "\t\t2. Inventario"<<endl;
+    cout << "\t\t3. Comprar a provedores"<<endl;
+    cout << "\t\t4. Ventas realizadas"<<endl;
+    cout << "\t\t5. Salir"<<endl;
+    cout << "\t\tIngrese una opcion: ";cin >> option;
+    switch (option) {
+        case 1:
+            system("cls");
+            registro_de_venta();
+            break;
+        case 2:
+            system("cls");
+            inventario();
+            break;
+        case 3:
+            system("cls");
+            proveedores();
+            break;
+        case 4:
+            system("cls");
+            ventas_realizadas();
+            break;
+        case 5:
+            exit(0);
+        default:
+            cout << "Opcion invalida" << endl;
+    }
 }
 
 
