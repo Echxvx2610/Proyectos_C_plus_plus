@@ -449,80 +449,63 @@ void menu(){
 
 
 /*
-***************************************************************************************
-//funcion vistas de ventas
-
+Funcion revisa inventario y resta de stock!(revisar)
 #include <iostream>
 #include <vector>
 #include <string>
 
 using namespace std;
 
-// Estructura para representar un producto en el inventario
-struct Producto {
-    string nombre;
+struct Producto{
+    string name;
     float precio;
-    int cantidad;
+    int stock;
 };
 
-// Estructura para representar un registro de venta
-struct RegistroVenta {
-    string nombre;
-    float precio;
-    int cantidad;
-};
+vector<Producto> Inventario;
 
-int main() {
-    // Crear el vector de inventario
-    vector<Producto> inventario;
-    
-    // Agregar algunos productos al inventario
-    Producto producto1 = {"Camisa", 19.99, 10};
-    Producto producto2 = {"Pantalón", 29.99, 5};
-    inventario.push_back(producto1);
-    inventario.push_back(producto2);
-    
-    // Mostrar el inventario inicial
-    cout << "Inventario inicial:" << endl;
-    for (const Producto& producto : inventario) {
-        cout << "Producto: " << producto.nombre << ", Cantidad: " << producto.cantidad << endl;
+struct RegistroVenta{
+    string name;
+    float precio;
+    int cantidadV;
+};
+vector<RegistroVenta> Venta;
+
+int main(){
+    string nombreProducto;
+    int cantidadVendida;
+    //ver estado de Inventario
+    cout <<"Estado de Inventario:"<<endl;
+    Inventario.push_back({"Camisa",100,10});
+    Inventario.push_back({"Pantalo",200,10});
+    for(auto producto:Inventario){
+        cout<<producto.name<<","<<producto.precio<<","<<producto.stock<<endl;
     }
+    cout <<'\n';
     
-    // Vector de registros de venta
-    vector<RegistroVenta> registrosVenta;
-    
-    // Realizar una venta
-    int indiceProductoVendido = 0;
-    int cantidadVendida = 3;
-    
-    if (inventario[indiceProductoVendido].cantidad >= cantidadVendida) {
-        // Crear un nuevo registro de venta
-        RegistroVenta venta;
-        venta.nombre = inventario[indiceProductoVendido].nombre;
-        venta.precio = inventario[indiceProductoVendido].precio;
-        venta.cantidad = cantidadVendida;
-        
-        // Agregar el registro de venta al vector de registrosVenta
-        registrosVenta.push_back(venta);
-        
-        // Actualizar la cantidad de productos en el inventario
-        inventario[indiceProductoVendido].cantidad -= cantidadVendida;
-        
-        cout << "Venta realizada con éxito." << endl;
-    } else {
-        cout << "No hay suficiente cantidad de productos en el inventario para la venta." << endl;
-    }
-    
-    // Mostrar el inventario después de la venta
-    cout << "Inventario después de la venta:" << endl;
-    for (const Producto& producto : inventario) {
-        cout << "Producto: " << producto.nombre << ", Cantidad: " << producto.cantidad << endl;
-    }
-    
-    // Mostrar los registros de venta
-    cout << "Registros de venta:" << endl;
-    for (const RegistroVenta& venta : registrosVenta) {
-        cout << "Producto: " << venta.nombre << ", Cantidad: " << venta.cantidad << ", Precio: " << venta.precio << endl;
+    cout <<"Registro de venta"<<endl;
+    cout <<"Ingrese el nombre del producto: ";cin>>nombreProducto;
+    cout <<"Ingrese la cantidad a vender: ";cin >>cantidadVendida;
+    for(auto producto:Inventario){
+        if(producto.name == nombreProducto){
+            cout << "El producto se encuentra en stock!"<<endl;
+            if(producto.stock >= cantidadVendida){
+                double totalVenta = cantidadVendida * producto.precio;
+                
+                Venta.push_back({nombreProducto,producto.precio,cantidadVendida});
+                //descontar la cantidad vendida del Inventario
+                producto.stock -= cantidadVendida;
+                cout <<"Se registro la venta correctamente. total de la venta: "<<totalVenta<<endl;
+                cout << "Inventario despues de venta!:"<<endl;
+                for(auto producto:Inventario){
+                    cout<<producto.name<<","<<producto.precio<<","<<producto.stock<<endl;
+                    }
+                    cout <<'\n';
+            } else{
+                cout << "No hay suficiente cantidad en inventario." << endl;
+            }break;
+        }
+        cout <<"El producto no se encuentra en el inventario!.."<<endl;
     }
     
     return 0;
@@ -611,7 +594,7 @@ int main() {
     return 0;
 }
 *****************************************************************************************
-comprobar que exista Producto y cantidad 
+Comprobar que exista Producto y cantidad 
 #include <iostream>
 #include <vector>
 #include <string>
