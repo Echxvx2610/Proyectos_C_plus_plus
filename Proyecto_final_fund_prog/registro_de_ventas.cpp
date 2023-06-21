@@ -211,6 +211,7 @@ void registro_de_venta(){
         case 1:
             a = 1;
             while(a==1){
+                /*
                 cin.ignore();
                 //falta bloque validar si existe el producto en inventario y que se tenga suficiente cantidad del mismo
                 cout << "\t\tNombre del producto: ";getline(cin,nombre);
@@ -218,6 +219,30 @@ void registro_de_venta(){
                 cout << "\t\tCantidad vendida:";getline(cin,cantidadV);
                 total = stof(precio) * stof(cantidadV);
                 registrosVenta.push_back({nombre,stof(precio),stoi(cantidadV),total});//stof: convertir string a float / stoi: convertir string a int
+                */
+                
+                cin.ignore();
+                cout<<"Nombre del producto: ";getline(cin,nombre);
+                cout<<"Cantidad de producto vendida: ";getline(cin,cantidadV);
+                for (auto producto : Inventario){
+                    if(producto.nombre == nombre){
+                        cout << "El producto se encuentra en el Inventario!"<<endl;
+                        if(producto.cantidadI >= stoi(cantidadV) ){
+                            cout<<"Se tiene suficiente stock para la venta"<<endl;
+                        }
+                        else{
+                            cout <<"No hay suficiente stock"<<endl;
+                        }
+                        total = producto.precio * stoi(cantidadV);
+                        registrosVenta.push_back({nombre,producto.precio,stoi(cantidadV),total});
+                        cout <<"El total de venta es: "<<total<<endl;
+                        producto.cantidadI = producto.cantidadI - stoi(cantidadV);
+                        cout << "El restante de stock es: "<<producto.cantidadI<<endl;
+                    }
+                    else{
+                        cout <<"El producto no se encuentra en el Inventario!!"<<endl;
+                    }
+                }
                 cout <<"\n\t\t1. Ingresar otra venta.."<<endl;
                 cout<<"\t\t2. Regresar.."<<endl;
                 cout <<"\t\tIngrese una Opcion: ";cin>>a;
