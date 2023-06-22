@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>   
 #include <vector>   //trabajar con Vectores  
@@ -5,7 +6,7 @@
 #include<limits>    // Para validacion de inputs
 #include <iomanip> // Para setw() y left (tabla dinamica)
 #include <ctime>   // Para trabajar con fechas y tiempos
-
+#include <algorithm>
 
 /*  
             ----- PROYECTO FINAL FUNDAMENTOS PROG. -----
@@ -98,6 +99,7 @@ int main() {
                 break;
             case 3:
                 system("cls");
+                exit(0);
                 break;
             default:
             system("cls");
@@ -211,16 +213,6 @@ void registro_de_venta(){
         case 1:
             a = 1;
             while(a==1){
-                /*
-                cin.ignore();
-                //falta bloque validar si existe el producto en inventario y que se tenga suficiente cantidad del mismo
-                cout << "\t\tNombre del producto: ";getline(cin,nombre);
-                cout<< "\t\tPrecio: $";getline(cin,precio);
-                cout << "\t\tCantidad vendida:";getline(cin,cantidadV);
-                total = stof(precio) * stof(cantidadV);
-                registrosVenta.push_back({nombre,stof(precio),stoi(cantidadV),total});//stof: convertir string a float / stoi: convertir string a int
-                */
-                
                 cin.ignore();
                 cout<<"Nombre del producto: ";getline(cin,nombre);
                 cout<<"Cantidad de producto vendida: ";getline(cin,cantidadV);
@@ -236,7 +228,24 @@ void registro_de_venta(){
                         total = producto.precio * stoi(cantidadV);
                         registrosVenta.push_back({nombre,producto.precio,stoi(cantidadV),total});
                         cout <<"El total de venta es: "<<total<<endl;
+                        
+                        //Borrar elemento de inventario y volver a agregar con diferente cantidadI
+                        string nombreABorrar = producto.nombre;
+                        auto iter = find_if(Inventario.begin(),Inventario.end(),
+                        [nombreABorrar](const Producto& p){
+                            return p.nombre == nombreABorrar;
+                        });
+                        
+                        if(iter != Inventario.end()){
+                            //Eliminar el elemento del vector
+                            Inventario.erase(iter);
+                        }
+                        else{
+                            cout << "No se pudo borrar el elemento"<<'\n';
+                        }
+                        
                         producto.cantidadI = producto.cantidadI - stoi(cantidadV);
+                        Inventario.push_back({producto.nombre,producto.precio,producto.cantidadI});
                         cout << "El restante de stock es: "<<producto.cantidadI<<endl;
                     }
                     else{
